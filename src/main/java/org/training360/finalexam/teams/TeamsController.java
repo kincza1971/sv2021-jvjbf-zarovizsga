@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.training360.finalexam.players.CreatePlayerCommand;
+import org.training360.finalexam.commands.CreatePlayerCommand;
+import org.training360.finalexam.commands.CreateTeamCommand;
+import org.training360.finalexam.services.TeamsService;
 import org.zalando.problem.Problem;
 
 import javax.validation.Valid;

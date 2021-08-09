@@ -1,14 +1,18 @@
-package org.training360.finalexam.teams;
+package org.training360.finalexam.services;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.training360.finalexam.players.CreatePlayerCommand;
+import org.training360.finalexam.commands.CreatePlayerCommand;
+import org.training360.finalexam.commands.UpdateWithExistingPlayerCommand;
 import org.training360.finalexam.players.Player;
 import org.training360.finalexam.reposytories.PlayersRepository;
 import org.training360.finalexam.reposytories.TeamsRepository;
+import org.training360.finalexam.commands.CreateTeamCommand;
+import org.training360.finalexam.teams.EntityNotFoundException;
+import org.training360.finalexam.teams.Team;
+import org.training360.finalexam.teams.TeamDTO;
 
 import java.util.List;
 
@@ -42,4 +46,32 @@ public class TeamsService {
         team.addPlayer(player);
         return modelMapper.map(team, TeamDTO.class);
     }
+
+
+    private boolean isTransferable(Team team,Player player) {
+        if (player.getTeam() == null) {
+            long count = team.getPlayers().stream()
+                    .filter(player1 -> player1.getPosition().equals(player.getPosition()))
+                    .count();
+            return count < 2;
+        }
+        return false;
+    }
+
+    @Transactional
+    public TeamDTO addExistingPlayerToTeamById(long id, UpdateWithExistingPlayerCommand command) {
+        Team team  = teamsRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("teams"));
+        Player player = playersRepository.findById(command.getPlayerId())
+                .orElseThrow(() -> new EntityNotFoundException("players"));
+        if (isTransferable(team, player)) {
+            team.addPlayer(player);
+        } else {
+            throw new IllegalArgumentException("A játékos leigazolása sikertelen.");
+        }
+        return modelMapper.map(team, TeamDTO.class);
+    }
+
+
+
 }

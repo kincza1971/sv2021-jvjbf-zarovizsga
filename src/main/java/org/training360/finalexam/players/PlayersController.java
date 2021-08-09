@@ -2,9 +2,10 @@ package org.training360.finalexam.players;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.training360.finalexam.commands.CreatePlayerCommand;
+import org.training360.finalexam.services.PlayersService;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
