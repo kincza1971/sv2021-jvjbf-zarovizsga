@@ -1,10 +1,9 @@
-package org.training360.finalexam.teams;
+package org.training360.finalexam.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.training360.finalexam.players.Player;
-import org.training360.finalexam.players.PlayerDTO;
+import org.training360.finalexam.dtos.PlayerDTO;
 
 import java.util.List;
 

@@ -6,13 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.training360.finalexam.commands.CreatePlayerCommand;
 import org.training360.finalexam.commands.UpdateWithExistingPlayerCommand;
-import org.training360.finalexam.players.Player;
+import org.training360.finalexam.entities.Player;
 import org.training360.finalexam.reposytories.PlayersRepository;
 import org.training360.finalexam.reposytories.TeamsRepository;
 import org.training360.finalexam.commands.CreateTeamCommand;
-import org.training360.finalexam.teams.EntityNotFoundException;
-import org.training360.finalexam.teams.Team;
-import org.training360.finalexam.teams.TeamDTO;
+import org.training360.finalexam.entities.Team;
+import org.training360.finalexam.dtos.TeamDTO;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class TeamsService {
     @Transactional
     public TeamDTO addNewPlayerToTeamById(long id, CreatePlayerCommand command) {
         Team team = teamsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("teams"));
+                .orElseThrow(() -> new IllegalArgumentException("teams"));
         Player player = new Player(command.getName(), command.getBirthDate(), command.getPosition());
         team.addPlayer(player);
         return modelMapper.map(team, TeamDTO.class);
@@ -61,9 +60,9 @@ public class TeamsService {
     @Transactional
     public TeamDTO addExistingPlayerToTeamById(long id, UpdateWithExistingPlayerCommand command) {
         Team team  = teamsRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("teams"));
+                .orElseThrow(() -> new IllegalArgumentException("teams not found"));
         Player player = playersRepository.findById(command.getPlayerId())
-                .orElseThrow(() -> new EntityNotFoundException("players"));
+                .orElseThrow(() -> new IllegalArgumentException("players"));
         if (isTransferable(team, player)) {
             team.addPlayer(player);
         } else {

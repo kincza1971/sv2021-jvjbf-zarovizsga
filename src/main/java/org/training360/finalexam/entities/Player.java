@@ -1,8 +1,8 @@
-package org.training360.finalexam.players;
+package org.training360.finalexam.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.training360.finalexam.teams.Team;
+import org.training360.finalexam.enums.PositionType;
 
 import javax.persistence.*;
 import java.time.LocalDate;

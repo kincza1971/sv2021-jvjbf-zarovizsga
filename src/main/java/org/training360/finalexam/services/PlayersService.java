@@ -5,8 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.training360.finalexam.commands.CreatePlayerCommand;
-import org.training360.finalexam.players.Player;
-import org.training360.finalexam.players.PlayerDTO;
+import org.training360.finalexam.entities.Player;
+import org.training360.finalexam.dtos.PlayerDTO;
 import org.training360.finalexam.reposytories.PlayersRepository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.training360.finalexam.players;
+package org.training360.finalexam.enums;
 
 public enum PositionType {
     GOALKEEPER,

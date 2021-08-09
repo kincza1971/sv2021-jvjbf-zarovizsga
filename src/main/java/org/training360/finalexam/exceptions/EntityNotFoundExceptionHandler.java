@@ -1,4 +1,4 @@
-package org.training360.finalexam.teams;
+package org.training360.finalexam.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

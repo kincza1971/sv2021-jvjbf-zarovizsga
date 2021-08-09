@@ -1,9 +1,8 @@
-package org.training360.finalexam.teams;
+package org.training360.finalexam.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.training360.finalexam.players.Player;
 
 import javax.persistence.*;
 import java.util.List;

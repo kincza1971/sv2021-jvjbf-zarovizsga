@@ -1,4 +1,4 @@
-package org.training360.finalexam.teams;
+package org.training360.finalexam.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,6 +8,8 @@ import org.training360.finalexam.commands.CreatePlayerCommand;
 import org.training360.finalexam.commands.CreateTeamCommand;
 import org.training360.finalexam.commands.UpdateWithExistingPlayerCommand;
 import org.training360.finalexam.services.TeamsService;
+import org.training360.finalexam.exceptions.EntityNotFoundExceptionHandler;
+import org.training360.finalexam.dtos.TeamDTO;
 import org.zalando.problem.Problem;
 
 import javax.validation.Valid;
@@ -40,7 +42,7 @@ public class TeamsController {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Problem> handleNotFound(IllegalArgumentException iae) {
-        return handler.handleNotFound(iae,"/recipe/entity-not-found", "Entity Not Found");
+        return handler.handleNotFound(iae,"teams/not-found", "Entity Not Found");
     }
 
     @PutMapping("/{id}/players")

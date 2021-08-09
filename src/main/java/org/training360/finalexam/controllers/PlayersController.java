@@ -1,8 +1,9 @@
-package org.training360.finalexam.players;
+package org.training360.finalexam.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.training360.finalexam.commands.CreatePlayerCommand;
+import org.training360.finalexam.dtos.PlayerDTO;
 import org.training360.finalexam.services.PlayersService;
 
 import javax.validation.Valid;
