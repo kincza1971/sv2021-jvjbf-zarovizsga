@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.training360.finalexam.commands.CreatePlayerCommand;
 import org.training360.finalexam.commands.CreateTeamCommand;
+import org.training360.finalexam.commands.UpdateWithExistingPlayerCommand;
 import org.training360.finalexam.services.TeamsService;
 import org.zalando.problem.Problem;
 
@@ -41,5 +42,17 @@ public class TeamsController {
     public ResponseEntity<Problem> handleNotFound(IllegalArgumentException iae) {
         return handler.handleNotFound(iae,"/recipe/entity-not-found", "Entity Not Found");
     }
+
+    @PutMapping("/{id}/players")
+    public TeamDTO addExistingPlayerToTeamById(@PathVariable long id, @RequestBody @Valid UpdateWithExistingPlayerCommand command) {
+        return teamsService.addExistingPlayerToTeamById(id, command);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable long id) {
+        teamsService.deleteById(id);
+    }
+
+
 
 }

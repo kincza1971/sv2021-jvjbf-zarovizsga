@@ -73,5 +73,8 @@ public class TeamsService {
     }
 
 
-
+    @Transactional
+    public void deleteById(long id) {
+        teamsRepository.deleteById(id);
+    }
 }

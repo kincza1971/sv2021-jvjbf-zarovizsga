@@ -10,13 +10,13 @@ import org.training360.finalexam.teams.EntityNotFoundExceptionHandler;
 public class FinalExamApplication {
 
     @Bean
-    ModelMapper modelMapper() {
-        return new ModelMapper();
+    EntityNotFoundExceptionHandler handler() {
+        return new EntityNotFoundExceptionHandler();
     }
 
     @Bean
-    EntityNotFoundExceptionHandler handler() {
-        return new EntityNotFoundExceptionHandler();
+    ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 
