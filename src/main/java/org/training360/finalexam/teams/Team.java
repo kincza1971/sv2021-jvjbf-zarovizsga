@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "teams")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,19 @@ public class Team {
 
     private String name;
 
-    @OneToMany(
-            mappedBy = "team")
+    @OneToMany(mappedBy = "team",
+            cascade = {
+            CascadeType.PERSIST,
+            CascadeType.REMOVE})
     private List<Player> players;
 
     public Team(String name) {
         this.name = name;
     }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+        player.setTeam(this);
+    }
+
 }

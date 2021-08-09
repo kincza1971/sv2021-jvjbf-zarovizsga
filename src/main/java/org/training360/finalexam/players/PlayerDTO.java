@@ -19,4 +19,8 @@ public class PlayerDTO {
     private PositionType position;
 
     private Team team;
+
+    public String getName() {
+        return name;
+    }
 }

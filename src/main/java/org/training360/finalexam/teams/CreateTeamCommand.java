@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeamCreateCommand {
+public class CreateTeamCommand {
     @NotBlank
     private String name;
 }

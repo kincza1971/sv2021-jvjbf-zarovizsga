@@ -7,9 +7,11 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
+import org.training360.finalexam.players.CreatePlayerCommand;
+import org.training360.finalexam.players.PlayerDTO;
 import org.training360.finalexam.players.PositionType;
-//import org.training360.finalexam.teams.CreateTeamCommand;
-//import org.training360.finalexam.teams.TeamDTO;
+import org.training360.finalexam.teams.CreateTeamCommand;
+import org.training360.finalexam.teams.TeamDTO;
 //import org.training360.finalexam.teams.UpdateWithExistingPlayerCommand;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
@@ -29,58 +31,58 @@ public class TeamControllerRestIT {
     TestRestTemplate template;
 
 
-//    @Test
-//    void testCreateNewTeam(){
-//        TeamDTO result =
-//                template.postForObject("/api/teams",
-//                        new CreateTeamCommand("Arsenal"),
-//                        TeamDTO.class);
-//
-//        assertEquals("Arsenal",result.getName());
-//
-//    }
-//
-//
-//    @Test
-//    void testGetTeams(){
-//        template.postForObject("/api/teams",
-//                new CreateTeamCommand("Arsenal"),
-//                TeamDTO.class);
-//
-//        template.postForObject("/api/teams",
-//                new CreateTeamCommand("Chelsea"),
-//                TeamDTO.class);
-//
-//        List<TeamDTO> result = template.exchange(
-//                "/api/teams",
-//                HttpMethod.GET,
-//                null,
-//                new ParameterizedTypeReference<List<TeamDTO>>() {
-//                }
-//        ).getBody();
-//
-//        assertThat(result).extracting(TeamDTO::getName)
-//                .containsExactly("Arsenal","Chelsea");
-//    }
-//
-//
-//    @Test
-//    void testAddNewPlayerToExistingTeam(){
-//        TeamDTO team =
-//                template.postForObject("/api/teams",
-//                        new CreateTeamCommand("Arsenal"),
-//                        TeamDTO.class);
-//
-//        TeamDTO resultWithPlayer = template.postForObject("/api/teams/{id}/players",
-//                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10), PositionType.CENTER_BACK),
-//                TeamDTO.class,
-//                team.getId());
-//
-//        assertThat(resultWithPlayer.getPlayers()).extracting(PlayerDTO::getName)
-//                .containsExactly("John Doe");
-//
-//    }
-//
+    @Test
+    void testCreateNewTeam(){
+        TeamDTO result =
+                template.postForObject("/api/teams",
+                        new CreateTeamCommand("Arsenal"),
+                        TeamDTO.class);
+
+        assertEquals("Arsenal",result.getName());
+
+    }
+
+
+    @Test
+    void testGetTeams(){
+        template.postForObject("/api/teams",
+                new CreateTeamCommand("Arsenal"),
+                TeamDTO.class);
+
+        template.postForObject("/api/teams",
+                new CreateTeamCommand("Chelsea"),
+                TeamDTO.class);
+
+        List<TeamDTO> result = template.exchange(
+                "/api/teams",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<TeamDTO>>() {
+                }
+        ).getBody();
+
+        assertThat(result).extracting(TeamDTO::getName)
+                .containsExactly("Arsenal","Chelsea");
+    }
+
+
+    @Test
+    void testAddNewPlayerToExistingTeam(){
+        TeamDTO team =
+                template.postForObject("/api/teams",
+                        new CreateTeamCommand("Arsenal"),
+                        TeamDTO.class);
+
+        TeamDTO resultWithPlayer = template.postForObject("/api/teams/{id}/players",
+                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10), PositionType.CENTER_BACK),
+                TeamDTO.class,
+                team.getId());
+
+        assertThat(resultWithPlayer.getPlayers()).extracting(PlayerDTO::getName)
+                .containsExactly("John Doe");
+
+    }
+
 //    @Test
 //    void testAddExistingPlayerToExistingTeam(){
 //        TeamDTO team =
@@ -147,7 +149,7 @@ public class TeamControllerRestIT {
 //        assertThat(resultTeam2.getPlayers()).isEmpty();
 //
 //    }
-//
+
 //    @Test
 //    void testAddPlayerWithPosition(){
 //        TeamDTO team1 =
@@ -186,26 +188,26 @@ public class TeamControllerRestIT {
 //                .containsOnly("John Doe","Jack Doe");
 //
 //    }
-//
-//    @Test
-//    void testAddPlayerToNotExistingTeam(){
-//        Long wrongId = 6666L;
-//
-//        Problem result = template.postForObject("/api/teams/"+wrongId+"/players",
-//                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
-//                Problem.class);
-//
-//        assertEquals(URI.create("teams/not-found"),result.getType());
-//        assertEquals(Status.NOT_FOUND,result.getStatus());
-//    }
-//
-//    @Test
-//    void testCreateTeamWithInvalidName(){
-//        Problem result =
-//                template.postForObject("/api/teams",
-//                        new CreateTeamCommand(""),
-//                        Problem.class);
-//
-//        assertEquals(Status.BAD_REQUEST,result.getStatus());
-//    }
+
+    @Test
+    void testAddPlayerToNotExistingTeam(){
+        Long wrongId = 6666L;
+
+        Problem result = template.postForObject("/api/teams/"+wrongId+"/players",
+                new CreatePlayerCommand("John Doe", LocalDate.of(1991,11,10),PositionType.CENTER_BACK),
+                Problem.class);
+
+        assertEquals(URI.create("teams/not-found"),result.getType());
+        assertEquals(Status.NOT_FOUND,result.getStatus());
+    }
+
+    @Test
+    void testCreateTeamWithInvalidName(){
+        Problem result =
+                template.postForObject("/api/teams",
+                        new CreateTeamCommand(""),
+                        Problem.class);
+
+        assertEquals(Status.BAD_REQUEST,result.getStatus());
+    }
 }
